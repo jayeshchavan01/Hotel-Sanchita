@@ -259,6 +259,23 @@
 
     .topbar-right { display: flex; align-items: center; gap: 10px; }
 
+    /* Language selector */
+    .lang-toggle {
+      padding: 8px 12px;
+      border-radius: 100px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-2);
+      color: var(--text-2);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+    }
+
+    .lang-toggle:hover { border-color: var(--accent); color: var(--accent); }
+    .lang-toggle:focus { outline: none; border-color: var(--accent); }
+
     /* Theme toggle */
     .theme-toggle {
       width: 40px; height: 40px;
@@ -329,7 +346,7 @@
       display: flex;
       gap: 4px;
       overflow-x: auto;
-      padding: 10px 0;
+         padding: 16px 0 10px 0px;
       -ms-overflow-style: none;
       scrollbar-width: none;
       max-width: 900px;
@@ -621,6 +638,24 @@
       flex: 1;
     }
 
+    .item-img {
+  width: 100%;
+  /* height: 180px; */
+  object-fit: cover;
+  display: block;
+}
+
+.modal-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.item-img-wrap {
+  overflow: hidden;
+}
+
     .modal-price-badge {
       background: var(--accent-light);
       color: var(--accent);
@@ -746,6 +781,12 @@
 <div class="topbar">
   <div class="topbar-brand">Hotel <span>Sanchita</span> Park</div>
   <div class="topbar-right">
+    <!-- Language Selector -->
+    <select class="lang-toggle" id="langToggle" title="Change language" aria-label="Change language">
+      <option value="en">English</option>
+      <option value="mr">मराठी</option>
+      <option value="hi">हिंदी</option>
+    </select>
     <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light mode">☀️</button>
   </div>
 </div>
@@ -950,7 +991,364 @@
 <button id="btt" aria-label="Back to top">↑</button>
 
 <script>
+// ─────── TRANSLATIONS ───────
+const translations = {
+  en: {
+    "search-placeholder": "Search dishes, ingredients…",
+    "welcome-badge": "🍽 Welcome to Our Menu",
+    "view-menu": "🍛 View Menu",
+    "location": "📍 Location",
+    "get-directions": "🗺 Get Directions",
+    "call-us": "📞 Call Us",
+    "no-dishes-found": "No dishes found",
+    "try-different": "Try a different keyword",
+    "our-location": "Our Location",
+    "thali": "Non-Veg Thali",
+    "nonveg-main": "Non-Veg Main Course",
+    "nonveg-starters": "Non-Veg Starters",
+    "veg-main": "Veg Main Course",
+    "veg-starters": "Veg Starters",
+    "cold": "Cold Drinks",
+    "rice": "Rice",
+    "roti": "Roti / Bhakri",
+    "cat-thali": "🍽 Thali",
+    "cat-nonveg-main": "🍗 Non-Veg Main",
+    "cat-nonveg-starters": "🦴 Non-Veg Starters",
+    "cat-veg-main": "🥘 Veg Main",
+    "cat-veg-starters": "🌿 Veg Starters",
+    "cat-cold": "🥤 Cold Drinks",
+    "cat-rice": "🍚 Rice",
+    "cat-roti": "🫓 Roti",
+    "cat-location": "📍 Location",
+    "included": "Included in this thali:",
+    "mutton-thali": "Mutton Thali",
+    "dhavara-mutton-thali": "Dhavara Mutton Thali",
+    "kharda-mutton-thali": "Kharda Mutton Thali",
+    "aalni-mutton-thali": "Aalni Mutton Thali",
+    "aalni-chicken-thali": "Aalni Chicken Thali",
+    "dhavara-chicken-thali": "Dhavara Chicken Thali",
+    "kharda-chicken-thali": "Kharda Chicken Thali",
+    "chicken-thali": "Chicken Thali",
+    "egg-thali": "Egg Thali",
+    "chicken-plate": "Chicken Plate",
+    "chicken-malvani-half": "Chicken Malvani (Half)",
+    "chicken-malvani-full": "Chicken Malvani (Full)",
+    "chicken-handi-half": "Chicken Handi (Half)",
+    "chicken-handi-full": "Chicken Handi (Full)",
+    "egg-boil": "Egg Boil",
+    "egg-masala": "Egg Masala",
+    "mutton-handi-half": "Mutton Handi (Half)",
+    "mutton-handi-full": "Mutton Handi (Full)",
+    "mutton-malvani-half": "Mutton Malvani (Half)",
+    "mutton-malvani-full": "Mutton Malvani (Full)",
+    "mutton-plate": "Mutton Plate",
+    "rassa-vati": "Rassa Vati",
+    "sharing-non-veg": "Sharing Non-Veg",
+    "boil-plate": "Boil Plate",
+    "chicken-banjara": "Chicken Banjara",
+    "chicken-pahadi-kebab": "Chicken Pahadi Kebab",
+    "chicken-tandoori-half": "Chicken Tandoori (Half)",
+    "chicken-tandoori-full": "Chicken Tandoori (Full)",
+    "chicken-tikka": "Chicken Tikka",
+    "dal-fry": "Dal Fry",
+    "dal-tadka": "Dal Tadka",
+    "mix-veg": "Mix Veg",
+    "kaju-paneer": "Kaju Paneer",
+    "kaju-masala": "Kaju Masala",
+    "akkha-masoor": "Akkha Masoor",
+    "paneer-masala": "Paneer Masala",
+    "paneer-tikka": "Paneer Tikka",
+    "dahi-vati": "Dahi Vati",
+    "dahi-vati-large": "Dahi Vati (Large)",
+    "fry-papad": "Fry Papad",
+    "masala-papad": "Masala Papad",
+    "roasted-papad": "Roasted Papad",
+    "solkadhi-glass": "Solkadhi Glass",
+    "amul-cool": "Amul Cool",
+    "jeera-soda": "Jeera Soda",
+    "mazza": "Mazza",
+    "mineral-water": "Mineral Water (1 Ltr)",
+    "solkadhi-glass-cold": "Solkadhi Glass",
+    "sprite": "Sprite",
+    "sting": "Sting",
+    "thums-up": "Thums Up",
+    "jeera-rice-half": "Jeera Rice (Half)",
+    "jeera-rice-full": "Jeera Rice (Full)",
+    "plain-rice-half": "Plain Rice (Half)",
+    "plain-rice-full": "Plain Rice (Full)",
+    "masala-rice-half": "Masala Rice (Half)",
+    "masala-rice-full": "Masala Rice (Full)",
+    "dal-khichdi": "Dal Khichdi",
+    "chapati": "Chapati / Roti",
+    "butter-roti": "Butter Roti",
+    "naan": "Naan",
+    "butter-naan": "Butter Naan",
+    "bhakri": "Bhakri",
+  },
+  mr: {
+    "search-placeholder": "डिश, घटक शोधा...",
+    "welcome-badge": "🍽 आमच्या मेन्यूत स्वागतम",
+    "view-menu": "🍛 मेन्यू पाहा",
+    "location": "📍 स्थान",
+    "get-directions": "🗺 दिशा मिळवा",
+    "call-us": "📞 आमच्याशी संपर्क करा",
+    "no-dishes-found": "कोण्याही पदार्थ मिळाले नाहीत",
+    "try-different": "भिन्न कीवर्ड वापरून पहा",
+    "our-location": "आमचे स्थान",
+    "thali": "मटन थाळी",
+    "nonveg-main": "मांसाहार मुख्य कोर्स",
+    "nonveg-starters": "मांसाहार स्टार्टर्स",
+    "veg-main": "शाकाहार मुख्य कोर्स",
+    "veg-starters": "शाकाहार स्टार्टर्स",
+    "cold": "थंड पेये",
+    "rice": "भात",
+    "roti": "रोटी / भाकरी",
+    "cat-thali": "🍽 थाळी",
+    "cat-nonveg-main": "🍗 मांसाहार मुख्य",
+    "cat-nonveg-starters": "🦴 मांसाहार स्टार्टर्स",
+    "cat-veg-main": "🥘 शाकाहार मुख्य",
+    "cat-veg-starters": "🌿 शाकाहार स्टार्टर्स",
+    "cat-cold": "🥤 थंड पेये",
+    "cat-rice": "🍚 भात",
+    "cat-roti": "🫓 रोटी",
+    "cat-location": "📍 स्थान",
+    "included": "या थाळीमध्ये समाविष्ट:",
+    "mutton-thali": "मटन थाळी",
+    "dhavara-mutton-thali": "ढवारा मटन थाळी",
+    "kharda-mutton-thali": "खरडा मटन थाळी",
+    "aalni-mutton-thali": "आलणी मटन थाळी",
+    "aalni-chicken-thali": "आलणी चिकन थाळी",
+    "dhavara-chicken-thali": "ढवारा चिकन थाळी",
+    "kharda-chicken-thali": "खरडा चिकन थाळी",
+    "chicken-thali": "चिकन थाळी",
+    "egg-thali": "अंड्याची थाळी",
+    "chicken-plate": "चिकन प्लेट",
+    "chicken-malvani-half": "चिकन मलवणी (अर्धी)",
+    "chicken-malvani-full": "चिकन मलवणी (पूर्ण)",
+    "chicken-handi-half": "चिकन हांडी (अर्धी)",
+    "chicken-handi-full": "चिकन हांडी (पूर्ण)",
+    "egg-boil": "उकळीस आलेले अंडे",
+    "egg-masala": "अंड्याची मसाला",
+    "mutton-handi-half": "मटन हांडी (अर्धी)",
+    "mutton-handi-full": "मटन हांडी (पूर्ण)",
+    "mutton-malvani-half": "मटन मलवणी (अर्धी)",
+    "mutton-malvani-full": "मटन मलवणी (पूर्ण)",
+    "mutton-plate": "मटन प्लेट",
+    "rassa-vati": "रस्स्या वाटी",
+    "sharing-non-veg": "शेअरिंग मांसाहार",
+    "boil-plate": "उकळीस आलेली प्लेट",
+    "chicken-banjara": "चिकन बंजारा",
+    "chicken-pahadi-kebab": "चिकन पहाडी कबाब",
+    "chicken-tandoori-half": "चिकन तंदूरी (अर्धी)",
+    "chicken-tandoori-full": "चिकन तंदूरी (पूर्ण)",
+    "chicken-tikka": "चिकन टिक्का",
+    "dal-fry": "डाळ तळलेली",
+    "dal-tadka": "डाळ तडका",
+    "mix-veg": "मिक्स भाजी",
+    "kaju-paneer": "काजू पनीर",
+    "kaju-masala": "काजू मसाला",
+    "akkha-masoor": "संपूर्ण मसूर",
+    "paneer-masala": "पनीर मसाला",
+    "paneer-tikka": "पनीर टिक्का",
+    "dahi-vati": "दही वाटी",
+    "dahi-vati-large": "दही वाटी (मोठी)",
+    "fry-papad": "तळलेली पापड",
+    "masala-papad": "मसाला पापड",
+    "roasted-papad": "भाजलेली पापड",
+    "solkadhi-glass": "सोलकढी ग्लास",
+    "amul-cool": "अमूल कूल",
+    "jeera-soda": "जीरा सोडा",
+    "mazza": "मज्जा",
+    "mineral-water": "खनिज पाणी (१ लीटर)",
+    "solkadhi-glass-cold": "सोलकढी ग्लास",
+    "sprite": "स्प्राईट",
+    "sting": "स्टिंग",
+    "thums-up": "थम्स अप",
+    "jeera-rice-half": "जीरा भात (अर्धी)",
+    "jeera-rice-full": "जीरा भात (पूर्ण)",
+    "plain-rice-half": "साधा भात (अर्धी)",
+    "plain-rice-full": "साधा भात (पूर्ण)",
+    "masala-rice-half": "मसाला भात (अर्धी)",
+    "masala-rice-full": "मसाला भात (पूर्ण)",
+    "dal-khichdi": "डाळ खिचडी",
+    "chapati": "चपाती / रोटी",
+    "butter-roti": "मक्खन रोटी",
+    "naan": "नान",
+    "butter-naan": "मक्खन नान",
+    "bhakri": "भाकरी",
+  },
+  hi: {
+    "search-placeholder": "डिश, सामग्री खोजें...",
+    "welcome-badge": "🍽 हमारे मेन्यू में आपका स्वागत है",
+    "view-menu": "🍛 मेन्यू देखें",
+    "location": "📍 स्थान",
+    "get-directions": "🗺 दिशा निर्देश प्राप्त करें",
+    "call-us": "📞 हमें कॉल करें",
+    "no-dishes-found": "कोई व्यंजन नहीं मिला",
+    "try-different": "एक अलग कीवर्ड आज़माएं",
+    "our-location": "हमारा स्थान",
+    "thali": "मटन थाली",
+    "nonveg-main": "मांसाहारी मुख्य पाठ्यक्रम",
+    "nonveg-starters": "मांसाहारी स्टार्टर",
+    "veg-main": "शाकाहारी मुख्य पाठ्यक्रम",
+    "veg-starters": "शाकाहारी स्टार्टर",
+    "cold": "ठंडे पेय",
+    "rice": "चावल",
+    "roti": "रोटी / भाकरी",
+    "cat-thali": "🍽 थाली",
+    "cat-nonveg-main": "🍗 मांसाहारी मुख्य",
+    "cat-nonveg-starters": "🦴 मांसाहारी स्टार्टर",
+    "cat-veg-main": "🥘 शाकाहारी मुख्य",
+    "cat-veg-starters": "🌿 शाकाहारी स्टार्टर",
+    "cat-cold": "🥤 ठंडे पेय",
+    "cat-rice": "🍚 चावल",
+    "cat-roti": "🫓 रोटी",
+    "cat-location": "📍 स्थान",
+    "included": "इस थाली में शामिल:",
+    "mutton-thali": "मटन थाली",
+    "dhavara-mutton-thali": "धवारा मटन थाली",
+    "kharda-mutton-thali": "खरदा मटन थाली",
+    "aalni-mutton-thali": "आलणी मटन थाली",
+    "aalni-chicken-thali": "आलणी चिकन थाली",
+    "dhavara-chicken-thali": "धवारा चिकन थाली",
+    "kharda-chicken-thali": "खरदा चिकन थाली",
+    "chicken-thali": "चिकन थाली",
+    "egg-thali": "अंडे की थाली",
+    "chicken-plate": "चिकन प्लेट",
+    "chicken-malvani-half": "चिकन मलवणी (आधी)",
+    "chicken-malvani-full": "चिकन मलवणी (पूरी)",
+    "chicken-handi-half": "चिकन हांडी (आधी)",
+    "chicken-handi-full": "चिकन हांडी (पूरी)",
+    "egg-boil": "उबले अंडे",
+    "egg-masala": "अंडे की मसाला",
+    "mutton-handi-half": "मटन हांडी (आधी)",
+    "mutton-handi-full": "मटन हांडी (पूरी)",
+    "mutton-malvani-half": "मटन मलवणी (आधी)",
+    "mutton-malvani-full": "मटन मलवणी (पूरी)",
+    "mutton-plate": "मटन प्लेट",
+    "rassa-vati": "रास्सा वाटी",
+    "sharing-non-veg": "शेयरिंग मांसाहार",
+    "boil-plate": "उबले व्यंजन की प्लेट",
+    "chicken-banjara": "चिकन बंजारा",
+    "chicken-pahadi-kebab": "चिकन पहाड़ी कबाब",
+    "chicken-tandoori-half": "चिकन तंदूरी (आधी)",
+    "chicken-tandoori-full": "चिकन तंदूरी (पूरी)",
+    "chicken-tikka": "चिकन टिक्का",
+    "dal-fry": "दाल तली हुई",
+    "dal-tadka": "दाल तड़का",
+    "mix-veg": "मिक्स सब्जी",
+    "kaju-paneer": "काजू पनीर",
+    "kaju-masala": "काजू मसाला",
+    "akkha-masoor": "पूरी मसूर",
+    "paneer-masala": "पनीर मसाला",
+    "paneer-tikka": "पनीर टिक्का",
+    "dahi-vati": "दही वाटी",
+    "dahi-vati-large": "दही वाटी (बड़ी)",
+    "fry-papad": "तली हुई पापड़",
+    "masala-papad": "मसाला पापड़",
+    "roasted-papad": "भुनी हुई पापड़",
+    "solkadhi-glass": "सोलकढ़ी ग्लास",
+    "amul-cool": "अमूल कूल",
+    "jeera-soda": "जीरा सोडा",
+    "mazza": "मज्जा",
+    "mineral-water": "खनिज जल (1 लीटर)",
+    "solkadhi-glass-cold": "सोलकढ़ी ग्लास",
+    "sprite": "स्प्राइट",
+    "sting": "स्टिंग",
+    "thums-up": "थम्स अप",
+    "jeera-rice-half": "जीरा चावल (आधा)",
+    "jeera-rice-full": "जीरा चावल (पूरा)",
+    "plain-rice-half": "सादा चावल (आधा)",
+    "plain-rice-full": "सादा चावल (पूरा)",
+    "masala-rice-half": "मसाला चावल (आधा)",
+    "masala-rice-full": "मसाला चावल (पूरा)",
+    "dal-khichdi": "दाल खिचड़ी",
+    "chapati": "चपाती / रोटी",
+    "butter-roti": "मक्खन रोटी",
+    "naan": "नान",
+    "butter-naan": "मक्खन नान",
+    "bhakri": "भाकरी",
+  }
+};
+
+// Current language
+let currentLang = localStorage.getItem('language') || 'en';
+
+// Translation function
+function t(key) {
+  return translations[currentLang][key] || translations['en'][key] || key;
+}
+
+// Set language
+function setLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('language', lang);
+  document.documentElement.lang = lang;
+  updatePageText();
+}
+
+// Update page text when language changes
+function updatePageText() {
+  // Update search placeholder
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) searchInput.placeholder = t('search-placeholder');
+
+  // Update hero badge
+  const heroBadge = document.querySelector('.hero-badge');
+  if (heroBadge) heroBadge.textContent = t('welcome-badge');
+
+  // Update hero buttons
+  const heroCtas = document.querySelector('.hero-ctas');
+  if (heroCtas) {
+    const viewMenuBtn = heroCtas.querySelector('[href="#thali"]');
+    const locationBtn = heroCtas.querySelector('[href="#location"]');
+    if (viewMenuBtn) viewMenuBtn.textContent = t('view-menu');
+    if (locationBtn) locationBtn.textContent = t('location');
+  }
+
+  // Update section titles
+  document.querySelector('.section-title')?.parentElement.parentElement.querySelectorAll('.section-title').forEach(el => {
+    const section = el.closest('.menu-section');
+    if (section) {
+      const sectionId = section.id;
+      el.textContent = t(sectionId) || el.textContent;
+    }
+  });
+
+  // Update category nav buttons
+  document.querySelectorAll('.cat-btn[data-cat]').forEach(btn => {
+    const cat = btn.dataset.cat;
+    btn.textContent = t('cat-' + cat) || btn.textContent;
+  });
+
+  // Update modal title if visible
+  if (document.getElementById('modal').classList.contains('open')) {
+    const itemsLabel = document.querySelector('.modal-items-label');
+    if (itemsLabel) itemsLabel.textContent = t('included');
+  }
+
+  // Update no results message
+  const noResultsText = document.querySelector('#no-results p:first-of-type');
+  const noResultsDesc = document.querySelector('#no-results p:last-of-type');
+  if (noResultsText) noResultsText.textContent = t('no-dishes-found');
+  if (noResultsDesc) noResultsDesc.textContent = t('try-different');
+
+  // Update location section
+  const locationSection = document.querySelector('#location .section-title');
+  if (locationSection) locationSection.textContent = t('our-location');
+
+  // Update location buttons
+  document.querySelectorAll('.loc-actions a').forEach(link => {
+    if (link.textContent.includes('Directions')) link.textContent = t('get-directions');
+    if (link.textContent.includes('Call')) link.textContent = t('call-us');
+  });
+
+  // Re-render all menu items with translated names
+  renderAll();
+}
+
 // ─────── DATA ───────
+
 const menuData = {
   thali: [
     { id:'mutton-thali', name:'Mutton Thali', price:'₹330', type:'non-veg', emoji:'🍽',
@@ -1042,23 +1440,121 @@ const menuData = {
   ]
 };
 
-// ─────── RENDER ───────
+const imageMap = {
+  // THALI
+  "mutton-thali": "Menu_images/mutton_thali.jpg",
+  "dhavara-mutton-thali": "Menu_images/Dhavara-Mutton-Thali.jpg",
+  "kharda-mutton-thali": "Menu_images/kharda-mutton-thali.jpg",
+  "aalni-mutton-thali": "Menu_images/Aalni-mutton-thali.JPG",
+
+  "aalni-chicken-thali": "Menu_images/chicken%20thali.jpg",
+  "dhavara-chicken-thali": "Menu_images/dhavara-Chicken-Thali.jpg",
+  "kharda-chicken-thali": "Menu_images/kharda%20chicken%20thali.jpg",
+  "chicken-thali": "Menu_images/chicken%20thali.jpg",
+
+  "egg-thali": "Menu_images/Egg%20Masala.jpeg",
+
+  // CHICKEN
+  "chicken-plate": "Menu_images/Chicken%20Plate.jpeg",
+  "chicken-malvani-half": "Menu_images/Chicken%20Malvani.jpeg",
+  "chicken-malvani-full": "Menu_images/Chicken%20Malvani.jpeg",
+  "chicken-handi-half": "Menu_images/Chicken%20Handi.jpeg",
+  "chicken-handi-full": "Menu_images/Chicken%20Handi.jpeg",
+  "chicken-banjara": "Menu_images/Chicken%20Banjara.jpg",
+  "chicken-pahadi-kebab": "Menu_images/Chicken%20Pahadi%20Kebab.jpg",
+  "chicken-tandoori-half": "Menu_images/Chicken%20Tandoori.jpeg",
+  "chicken-tandoori-full": "Menu_images/Chicken%20Tandoori.jpeg",
+  "chicken-tikka": "Menu_images/Chicken%20Tikka.jpeg",
+
+  // MUTTON
+  "mutton-plate": "Menu_images/Mutton%20Plate.jpeg",
+  "mutton-malvani-half": "Menu_images/Mutton%20Malvani.jpeg",
+  "mutton-malvani-full": "Menu_images/Mutton%20Malvani.jpeg",
+  "mutton-handi-half": "Menu_images/Mutton%20Handi.jpeg",
+  "mutton-handi-full": "Menu_images/Mutton%20Handi.jpeg",
+
+  // EGG
+  "egg-boil": "Menu_images/Boil%20Plate.jpg",
+  "egg-masala": "Menu_images/Egg%20Masala.jpeg",
+  "boil-plate": "Menu_images/Boil%20Plate.jpg",
+
+  // VEG
+  "dal-fry": "Menu_images/Dal%20Fry.jpeg",
+  "dal-tadka": "Menu_images/Dal%20Tadka.jpeg",
+  "dal-khichdi": "Menu_images/Dal%20Khichdi.jpeg",
+  "akkha-masoor": "Menu_images/Akkha%20Masoor.jpeg",
+
+  "kaju-paneer": "Menu_images/Kaju%20Paneer.jpeg",
+  "kaju-masala": "Menu_images/Kaju%20Masala.jpeg",
+  "paneer-masala": "Menu_images/Paneer%20Masala.jpeg",
+  "paneer-tikka": "Menu_images/Paneer%20Tikka.jpeg",
+
+  "mix-veg": "Menu_images/Mix%20Veg.jpg",
+
+  // RICE
+  "jeera-rice-half": "Menu_images/Jeera%20Rice.jpeg",
+  "jeera-rice-full": "Menu_images/Jeera%20Rice.jpeg",
+  "plain-rice-half": "Menu_images/Plain%20Rice.jpeg",
+  "plain-rice-full": "Menu_images/Plain%20Rice.jpeg",
+  "masala-rice-half": "Menu_images/Masala%20Rice.jpeg",
+  "masala-rice-full": "Menu_images/Masala%20Rice.jpeg",
+
+  // ROTI
+  "chapati": "Menu_images/Chapati%20%20Roti.jpg",
+  "butter-roti": "Menu_images/Butter%20Naan.jpeg",
+  "naan": "Menu_images/Naan.jpeg",
+  "butter-naan": "Menu_images/Butter%20Naan.jpeg",
+  "bhakri": "Menu_images/Bhakri.jpeg",
+
+  // PAPAD
+  "fry-papad": "Menu_images/Masala%20Papad.jpeg",
+  "masala-papad": "Menu_images/Masala%20Papad.jpeg",
+  "roasted-papad": "Menu_images/Roasted%20Papad.jpeg",
+
+  // DAHI
+  "dahi-vati": "Menu_images/Dahi%20Vati.jpeg",
+  "dahi-vati-large": "Menu_images/Dahi%20Vati.jpeg",
+
+  // DRINKS
+  "solkadhi-glass": "Menu_images/Solkadhi%20Glass.jpeg",
+  "solkadhi-glass-cold": "Menu_images/Solkadhi%20Glass.jpeg",
+
+  "amul-cool": "Menu_images/Amul%20Cool.jpg",
+  "jeera-soda": "Menu_images/Jeera%20Soda.jpeg",
+  "mazza": "Menu_images/Mazza.jpg",
+  "mineral-water": "Menu_images/Mineral%20Water.jpeg",
+  "sprite": "Menu_images/Sprite.jpeg",
+  "sting": "Menu_images/Sting.jpeg",
+  "thums-up": "Menu_images/Thums%20Up.jpeg",
+
+  // OTHER
+  "rassa-vati": "Menu_images/Rassa%20Vati.jpeg",
+  "sharing-non-veg": "Menu_images/Chicken%20Plate.jpeg"
+};
+
 function buildCard(item) {
   const isNonVeg = item.type === 'non-veg';
   const dotClass = isNonVeg ? 'non-veg' : (item.type === 'cold' ? '' : 'veg');
   const dotHTML = item.type === 'cold'
     ? `<span style="font-size:14px">💧</span>`
     : `<span class="veg-dot ${dotClass}"></span>`;
+  
+  const translatedName = t(item.id) || item.name;
+  const itemLower = translatedName.toLowerCase();
 
   return `
-    <div class="item-card" data-name="${item.name.toLowerCase()}" data-id="${item.id}"
+    <div class="item-card" document.getElementById('modalName').textContent = t(item.id) || item.name; data-id="${item.id}"
          onclick="openModal(${JSON.stringify(item).replace(/"/g,'&quot;')})">
-      <div class="item-img-wrap">
-        <div class="item-img-placeholder">${item.emoji}</div>
-      </div>
+<div class="item-img-wrap">
+  <img
+    src="${imageMap[item.id]}"
+    alt="${translatedName}"
+    class="item-img"
+  >
+</div>
       <div class="item-info">
         <div class="item-name-row">
-          <span class="item-name">${item.name}</span>
+          <span class="item-name">${translatedName}</span>
           ${dotHTML}
         </div>
         <div class="item-price">${item.price}</div>
@@ -1101,15 +1597,24 @@ const modal = document.getElementById('modal');
 const modalClose = document.getElementById('modalClose');
 
 function openModal(item) {
-  document.getElementById('modalName').textContent = item.name;
+  document.getElementById('modalName').textContent = t(item.id) || item.name;
   document.getElementById('modalPrice').textContent = item.price;
   document.getElementById('modalDesc').textContent = '';
 
   const imgWrap = document.getElementById('modalImgWrap');
-  imgWrap.innerHTML = `<div class="modal-img-placeholder">${item.emoji}</div>`;
+imgWrap.innerHTML = `
+  <img
+    src="${imageMap[item.id] || 'Menu_images/logo.svg'}"
+    alt="${item.name}"
+    class="modal-img"
+  >
+`;
 
   const itemsWrap = document.getElementById('modalItemsWrap');
   const itemsList = document.getElementById('modalItems');
+  const itemsLabel = document.querySelector('.modal-items-label');
+  if (itemsLabel) itemsLabel.textContent = t('included');
+  
   if (item.items && item.items.length) {
     itemsList.innerHTML = item.items.map(i => `<li>${i}</li>`).join('');
     itemsWrap.style.display = '';
@@ -1140,6 +1645,17 @@ themeToggle.addEventListener('click', () => {
   isDark = !isDark;
   html.setAttribute('data-theme', isDark ? 'dark' : 'light');
   themeToggle.textContent = isDark ? '🌙' : '☀️';
+});
+
+// ─────── LANGUAGE ───────
+const langToggle = document.getElementById('langToggle');
+
+// Set initial language
+langToggle.value = currentLang;
+updatePageText();
+
+langToggle.addEventListener('change', (e) => {
+  setLanguage(e.target.value);
 });
 
 // ─────── BACK TO TOP ───────

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8B6914"/>
+      <stop offset="100%" stop-color="#F5EDD6"/>
+    </linearGradient>
+  </defs>
+  <rect width="280" height="280" rx="28" fill="#FAF9F6"/>
+  <path d="M70 90h140v100c0 18-14 32-32 32H102c-18 0-32-14-32-32V90Z" fill="url(#g)"/>
+  <path d="M96 84h88c10 0 18 8 18 18v66H78V102c0-10 8-18 18-18Z" fill="#fff" opacity="0.9"/>
+  <path d="M108 112h64v16h-64zm0 34h64v16h-64z" fill="#8B6914" opacity="0.9"/>
+  <circle cx="140" cy="160" r="24" fill="#8B6914" opacity="0.9"/>
+  <text x="140" y="240" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="24" fill="#5C5751">Sanchita</text>
+</svg>
