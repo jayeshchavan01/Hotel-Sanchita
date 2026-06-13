@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hotel Sanchita Park — Menu</title>
+  <link rel="icon" type="image/svg+xml" href="Menu_images/logo.svg">
+  <link rel="shortcut icon" href="Menu_images/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
@@ -719,13 +721,159 @@
     /* ── FOOTER ── */
     footer {
       text-align: center;
-      padding: 28px 20px;
+      padding: 32px 20px 24px;
       border-top: 1px solid var(--border);
       font-size: 12px;
       color: var(--text-3);
+      line-height: 1.8;
     }
 
     footer strong { color: var(--accent); font-weight: 500; }
+
+    .footer-designer {
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: var(--text-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .footer-designer a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+      border-bottom: 1px dashed var(--accent);
+      padding-bottom: 1px;
+    }
+
+    .footer-designer a:hover { color: var(--accent-warm); border-color: var(--accent-warm); }
+
+    /* ── WHATSAPP BUTTON ── */
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 84px; right: 24px;
+      width: 50px; height: 50px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+      transition: all 0.25s;
+      z-index: 150;
+      text-decoration: none;
+      animation: waPulse 2.5s infinite;
+    }
+
+    #whatsapp-btn:hover { background: #20bd5a; transform: scale(1.1); animation: none; }
+
+    #whatsapp-btn svg { width: 26px; height: 26px; }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,0.45); }
+      50%       { box-shadow: 0 4px 28px rgba(37,211,102,0.75), 0 0 0 8px rgba(37,211,102,0.12); }
+    }
+
+    /* ── CHEF'S SPECIALS ── */
+    .specials-bar {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-warm) 100%);
+      padding: 18px 20px;
+      overflow: hidden;
+    }
+
+    .specials-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .specials-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .specials-label::before, .specials-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+
+    .specials-row {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .specials-row::-webkit-scrollbar { display: none; }
+
+    .special-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 100px;
+      padding: 7px 14px 7px 8px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+
+    .special-chip:hover { background: rgba(255,255,255,0.28); transform: translateY(-1px); }
+
+    .special-chip-img {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.5);
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.2);
+    }
+
+    .special-chip-name {
+      font-size: 12.5px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .special-chip-price {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      margin-left: 2px;
+    }
+
+    /* ── ITEM CARD SPECIAL BADGE ── */
+    .item-img-wrap { position: relative; }
+
+    .special-badge {
+      position: absolute;
+      top: 6px; left: 6px;
+      background: linear-gradient(135deg, #C8922A, #E5A83C);
+      color: #fff;
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 100px;
+      pointer-events: none;
+      z-index: 2;
+      white-space: nowrap;
+    }
 
     /* ── BACK TO TOP ── */
     #btt {
@@ -816,6 +964,14 @@
     <a href="#location" class="btn-ghost">📍 Location</a>
   </div>
 </header>
+
+<!-- CHEF'S SPECIALS BAR -->
+<div class="specials-bar" id="specialsBar">
+  <div class="specials-inner">
+    <div class="specials-label">⭐ Chef's Specials</div>
+    <div class="specials-row" id="specialsRow"></div>
+  </div>
+</div>
 
 <!-- SEARCH -->
 <div class="search-wrap">
@@ -966,6 +1122,12 @@
 <!-- FOOTER -->
 <footer>
   Made with ❤️ for <strong>Hotel Sanchita Park</strong> · Karad, Maharashtra
+  <div class="footer-designer">
+    <span>✦</span>
+    <span>Designed &amp; Developed by</span>
+    <a href="https://jayesh-chavan-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer">Jayesh Chavan</a>
+    <span>✦</span>
+  </div>
 </footer>
 
 <!-- MODAL -->
@@ -986,6 +1148,13 @@
     </div>
   </div>
 </div>
+
+<!-- WHATSAPP BUTTON -->
+<a id="whatsapp-btn" href="https://wa.me/919876543210?text=Hello%20Hotel%20Sanchita%20Park%2C%20I%20would%20like%20to%20make%20a%20reservation" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
 <!-- BACK TO TOP -->
 <button id="btt" aria-label="Back to top">↑</button>
@@ -1345,6 +1514,7 @@ function updatePageText() {
 
   // Re-render all menu items with translated names
   renderAll();
+  renderSpecials();
 }
 
 // ─────── DATA ───────
@@ -1445,92 +1615,102 @@ const imageMap = {
   "mutton-thali": "Menu_images/mutton_thali.jpg",
   "dhavara-mutton-thali": "Menu_images/Dhavara-Mutton-Thali.jpg",
   "kharda-mutton-thali": "Menu_images/kharda-mutton-thali.jpg",
-  "aalni-mutton-thali": "Menu_images/Aalni-mutton-thali.JPG",
+  "aalni-mutton-thali": "Menu_images/Aalni-mutton-thali.jpg",
 
-  "aalni-chicken-thali": "Menu_images/chicken%20thali.jpg",
+  "aalni-chicken-thali": "Menu_images/chicken thali.jpg",
   "dhavara-chicken-thali": "Menu_images/dhavara-Chicken-Thali.jpg",
-  "kharda-chicken-thali": "Menu_images/kharda%20chicken%20thali.jpg",
-  "chicken-thali": "Menu_images/chicken%20thali.jpg",
+  "kharda-chicken-thali": "Menu_images/kharda chicken thali.jpg",
+  "chicken-thali": "Menu_images/chicken thali.jpg",
 
-  "egg-thali": "Menu_images/Egg%20Masala.jpeg",
+  "egg-thali": "Menu_images/Egg Masala.jpeg",
 
   // CHICKEN
-  "chicken-plate": "Menu_images/Chicken%20Plate.jpeg",
-  "chicken-malvani-half": "Menu_images/Chicken%20Malvani.jpeg",
-  "chicken-malvani-full": "Menu_images/Chicken%20Malvani.jpeg",
-  "chicken-handi-half": "Menu_images/Chicken%20Handi.jpeg",
-  "chicken-handi-full": "Menu_images/Chicken%20Handi.jpeg",
-  "chicken-banjara": "Menu_images/Chicken%20Banjara.jpg",
-  "chicken-pahadi-kebab": "Menu_images/Chicken%20Pahadi%20Kebab.jpg",
-  "chicken-tandoori-half": "Menu_images/Chicken%20Tandoori.jpeg",
-  "chicken-tandoori-full": "Menu_images/Chicken%20Tandoori.jpeg",
-  "chicken-tikka": "Menu_images/Chicken%20Tikka.jpeg",
+  "chicken-plate": "Menu_images/Chicken Plate.jpeg",
+  "chicken-malvani-half": "Menu_images/Chicken Malvani.jpeg",
+  "chicken-malvani-full": "Menu_images/Chicken Malvani.jpeg",
+  "chicken-handi-half": "Menu_images/Chicken Handi.jpeg",
+  "chicken-handi-full": "Menu_images/Chicken Handi.jpeg",
+  "chicken-banjara": "Menu_images/Chicken Banjara.jpg",
+  "chicken-pahadi-kebab": "Menu_images/Chicken Pahadi Kebab.jpg",
+  "chicken-tandoori-half": "Menu_images/Chicken Tandoori.jpeg",
+  "chicken-tandoori-full": "Menu_images/Chicken Tandoori.jpeg",
+  "chicken-tikka": "Menu_images/Chicken Tikka.jpeg",
 
   // MUTTON
-  "mutton-plate": "Menu_images/Mutton%20Plate.jpeg",
-  "mutton-malvani-half": "Menu_images/Mutton%20Malvani.jpeg",
-  "mutton-malvani-full": "Menu_images/Mutton%20Malvani.jpeg",
-  "mutton-handi-half": "Menu_images/Mutton%20Handi.jpeg",
-  "mutton-handi-full": "Menu_images/Mutton%20Handi.jpeg",
+  "mutton-plate": "Menu_images/Mutton Plate.jpeg",
+  "mutton-malvani-half": "Menu_images/Mutton Malvani.jpeg",
+  "mutton-malvani-full": "Menu_images/Mutton Malvani.jpeg",
+  "mutton-handi-half": "Menu_images/Mutton Handi.jpeg",
+  "mutton-handi-full": "Menu_images/Mutton Handi.jpeg",
 
   // EGG
-  "egg-boil": "Menu_images/Boil%20Plate.jpg",
-  "egg-masala": "Menu_images/Egg%20Masala.jpeg",
-  "boil-plate": "Menu_images/Boil%20Plate.jpg",
+  "egg-boil": "Menu_images/Boil Plate.jpg",
+  "egg-masala": "Menu_images/Egg Masala.jpeg",
+  "boil-plate": "Menu_images/Boil Plate.jpg",
 
   // VEG
-  "dal-fry": "Menu_images/Dal%20Fry.jpeg",
-  "dal-tadka": "Menu_images/Dal%20Tadka.jpeg",
-  "dal-khichdi": "Menu_images/Dal%20Khichdi.jpeg",
-  "akkha-masoor": "Menu_images/Akkha%20Masoor.jpeg",
+  "dal-fry": "Menu_images/Dal Fry.jpeg",
+  "dal-tadka": "Menu_images/Dal Tadka.jpeg",
+  "dal-khichdi": "Menu_images/Dal Khichdi.jpeg",
+  "akkha-masoor": "Menu_images/Akkha Masoor.jpeg",
 
-  "kaju-paneer": "Menu_images/Kaju%20Paneer.jpeg",
-  "kaju-masala": "Menu_images/Kaju%20Masala.jpeg",
-  "paneer-masala": "Menu_images/Paneer%20Masala.jpeg",
-  "paneer-tikka": "Menu_images/Paneer%20Tikka.jpeg",
+  "kaju-paneer": "Menu_images/Kaju Paneer.jpeg",
+  "kaju-masala": "Menu_images/Kaju Masala.jpeg",
+  "paneer-masala": "Menu_images/Paneer Masala.jpeg",
+  "paneer-tikka": "Menu_images/Paneer Tikka.jpeg",
 
-  "mix-veg": "Menu_images/Mix%20Veg.jpg",
+  "mix-veg": "Menu_images/Mix Veg.jpg",
 
   // RICE
-  "jeera-rice-half": "Menu_images/Jeera%20Rice.jpeg",
-  "jeera-rice-full": "Menu_images/Jeera%20Rice.jpeg",
-  "plain-rice-half": "Menu_images/Plain%20Rice.jpeg",
-  "plain-rice-full": "Menu_images/Plain%20Rice.jpeg",
-  "masala-rice-half": "Menu_images/Masala%20Rice.jpeg",
-  "masala-rice-full": "Menu_images/Masala%20Rice.jpeg",
+  "jeera-rice-half": "Menu_images/Jeera Rice.jpeg",
+  "jeera-rice-full": "Menu_images/Jeera Rice.jpeg",
+  "plain-rice-half": "Menu_images/Plain Rice.jpeg",
+  "plain-rice-full": "Menu_images/Plain Rice.jpeg",
+  "masala-rice-half": "Menu_images/Masala Rice.jpeg",
+  "masala-rice-full": "Menu_images/Masala Rice.jpeg",
 
   // ROTI
-  "chapati": "Menu_images/Chapati%20%20Roti.jpg",
-  "butter-roti": "Menu_images/Butter%20Naan.jpeg",
+  "chapati": "Menu_images/Chapati  Roti.jpg",
+  "butter-roti": "Menu_images/Butter Naan.jpeg",
   "naan": "Menu_images/Naan.jpeg",
-  "butter-naan": "Menu_images/Butter%20Naan.jpeg",
+  "butter-naan": "Menu_images/Butter Naan.jpeg",
   "bhakri": "Menu_images/Bhakri.jpeg",
 
   // PAPAD
-  "fry-papad": "Menu_images/Masala%20Papad.jpeg",
-  "masala-papad": "Menu_images/Masala%20Papad.jpeg",
-  "roasted-papad": "Menu_images/Roasted%20Papad.jpeg",
+  "fry-papad": "Menu_images/Masala Papad.jpeg",
+  "masala-papad": "Menu_images/Masala Papad.jpeg",
+  "roasted-papad": "Menu_images/Roasted Papad.jpeg",
 
   // DAHI
-  "dahi-vati": "Menu_images/Dahi%20Vati.jpeg",
-  "dahi-vati-large": "Menu_images/Dahi%20Vati.jpeg",
+  "dahi-vati": "Menu_images/Dahi Vati.jpeg",
+  "dahi-vati-large": "Menu_images/Dahi Vati.jpeg",
 
   // DRINKS
-  "solkadhi-glass": "Menu_images/Solkadhi%20Glass.jpeg",
-  "solkadhi-glass-cold": "Menu_images/Solkadhi%20Glass.jpeg",
+  "solkadhi-glass": "Menu_images/Solkadhi Glass.jpeg",
+  "solkadhi-glass-cold": "Menu_images/Solkadhi Glass.jpeg",
 
-  "amul-cool": "Menu_images/Amul%20Cool.jpg",
-  "jeera-soda": "Menu_images/Jeera%20Soda.jpeg",
+  "amul-cool": "Menu_images/Amul Cool.jpg",
+  "jeera-soda": "Menu_images/Jeera Soda.jpeg",
   "mazza": "Menu_images/Mazza.jpg",
-  "mineral-water": "Menu_images/Mineral%20Water.jpeg",
+  "mineral-water": "Menu_images/Mineral Water.jpeg",
   "sprite": "Menu_images/Sprite.jpeg",
   "sting": "Menu_images/Sting.jpeg",
-  "thums-up": "Menu_images/Thums%20Up.jpeg",
+  "thums-up": "Menu_images/Thums Up.jpeg",
 
   // OTHER
-  "rassa-vati": "Menu_images/Rassa%20Vati.jpeg",
-  "sharing-non-veg": "Menu_images/Chicken%20Plate.jpeg"
+  "rassa-vati": "Menu_images/Rassa Vati.jpeg",
+  "sharing-non-veg": "Menu_images/Chicken Plate.jpeg"
 };
+
+// ─────── CHEF'S SPECIALS ───────
+const specialIds = new Set([
+  'mutton-thali',
+  'kharda-mutton-thali',
+  'chicken-pahadi-kebab',
+  'chicken-banjara',
+  'paneer-tikka',
+  'mix-veg'
+]);
 
 function buildCard(item) {
   const isNonVeg = item.type === 'non-veg';
@@ -1540,16 +1720,18 @@ function buildCard(item) {
     : `<span class="veg-dot ${dotClass}"></span>`;
   
   const translatedName = t(item.id) || item.name;
-  const itemLower = translatedName.toLowerCase();
+  const badgeHTML = specialIds.has(item.id) ? `<span class="special-badge">⭐ Special</span>` : '';
 
   return `
-    <div class="item-card" document.getElementById('modalName').textContent = t(item.id) || item.name; data-id="${item.id}"
+    <div class="item-card" data-id="${item.id}" data-name="${translatedName.toLowerCase()}"
          onclick="openModal(${JSON.stringify(item).replace(/"/g,'&quot;')})">
 <div class="item-img-wrap">
+  ${badgeHTML}
   <img
-    src="${imageMap[item.id]}"
+    src="${imageMap[item.id] || ''}"
     alt="${translatedName}"
     class="item-img"
+    onerror="this.style.display='none'"
   >
 </div>
       <div class="item-info">
@@ -1569,7 +1751,27 @@ function renderAll() {
   });
 }
 
+function renderSpecials() {
+  const row = document.getElementById('specialsRow');
+  if (!row) return;
+  const specials = [];
+  Object.values(menuData).forEach(items => items.forEach(item => {
+    if (specialIds.has(item.id)) specials.push(item);
+  }));
+  row.innerHTML = specials.map(item => {
+    const name = t(item.id) || item.name;
+    const imgSrc = imageMap[item.id] || '';
+    return `<a class="special-chip" href="#${Object.keys(menuData).find(cat => menuData[cat].some(i => i.id === item.id))}"
+      onclick="openModal(${JSON.stringify(item).replace(/"/g,'&quot;')});event.preventDefault()">
+      <img class="special-chip-img" src="${imgSrc}" alt="${name}" onerror="this.style.display='none'">
+      <span class="special-chip-name">${name}</span>
+      <span class="special-chip-price">${item.price}</span>
+    </a>`;
+  }).join('');
+}
+
 renderAll();
+renderSpecials();
 
 // ─────── SEARCH ───────
 const searchInput = document.getElementById('searchInput');
